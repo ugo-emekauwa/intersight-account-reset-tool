@@ -2,13 +2,13 @@
 
 The Cisco Intersight Account Reset Tool is designed to increase the efficiency of developers, engineers, sellers and trainers working with Cisco Intersight by automating the Intersight account reset process.
 
-The Cisco Intersight Account Reset Tool will automatically remove any devices, profiles, policies and/or users created under the Intersight account.
+The Cisco Intersight Account Reset Tool will automatically remove any devices, profiles, policies and/or users created under an Intersight account.
 By removing the burden of having to manually reset accounts, the Cisco Intersight Account Reset Tool enables more time to be spent on other tasks.
 For developers and engineers building applications and platforms for Cisco Intersight, the development and testing process of new features is simplified. 
 For sellers and trainers demonstrating the Cisco Intersight product, downtime between customer or student engagements is reduced.
 The Cisco Intersight Account Reset Tool also has the ability to exempt specified users and devices from the account reset process.
 
-Use of the the Cisco Intersight Account Reset Tool is at your own risk and intended for development, testing, demonstration and training environments. Please do not use on production systems.
+Use of the Cisco Intersight Account Reset Tool is at your own risk and intended for development, testing, demonstration and training environments. Please do not use on production systems.
 
 ## Prerequisites:
 1. Python 3 installed, which can be downloaded from https://www.python.org/downloads/.
@@ -59,11 +59,11 @@ The Cisco Intersight Account Reset Tool provides the ability to exempt specified
     - Open the intersight_account_reset_tool.py file in an IDLE or text editor of choice.
     - Find the comment **"MODULE OPTION 2 - Device Exemptions"**.
     - Underneath, you will find the list **exempt_devices = []**. The list is currently empty.
-    - Fill in between the square brackets of the **exempt_devices** list with the hostname, product ID, or serial number of any devices that should not be removed by the Account Reset Tool. Each entry should be separated by a comma. If a hostname or product ID is entered, all devices sharing that same hostname or product ID will be exempted. For UCS domains with dual Fabric Interconnects, be sure to provide the serial number of each Fabric Interconnect individually. Leave the list blank if there are no device exemptions. Here is an example using serial numbers:
+    - Fill in between the square brackets of the **exempt_devices** list with the hostname, product ID, or serial number of any devices that should not be removed by the Account Reset Tool. Each entry should be separated by a comma. If a hostname or product ID is entered, all devices sharing that same hostname or product ID will be exempted. For Cisco UCS domains with dual Fabric Interconnects, be sure to provide the serial number of each Fabric Interconnect individually. Leave the list blank if there are no device exemptions. Here is an example using serial numbers:
       ```py
       exempt_devices = ["ABV1304000V", "EZL252770MU", "WIA344370GE"]
       ```
-    - Combinations of attributes for different devices can also be used as well for exemptions. Here is an example using a serial number, a hostname and a product ID for any HyperFlex HX220c M5 All Flash server nodes:
+    - Combinations of attributes for different devices can also be used as well for exemptions. Here is an example using a serial number, a hostname and a product ID for any Cisco HyperFlex HX220c M5 All Flash server nodes:
       ```py
       exempt_devices = ["ABV1304000V", "hostname1@company.org", "HXAF220C-M5SX"]
       ```
