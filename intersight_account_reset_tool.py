@@ -3,8 +3,8 @@ Cisco Intersight Account Reset Tool, v1.0
 Author: Ugo Emekauwa
 Contact: uemekauw@cisco.com, uemekauwa@gmail.com
 Summary: The Cisco Intersight Account Reset Tool automates the process
-          of cleaning up and resetting a Cisco Intersight service
-          account used for demonstration purposes.
+          of cleaning up and resetting a Cisco Intersight account used 
+          for development, testing, demonstration and training purposes.
 """
 
 # Import needed Python modules
