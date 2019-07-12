@@ -16,7 +16,7 @@ The Cisco Intersight Account Reset Tool also has the ability to exempt specified
 ## Getting Started:
 
 1. Please ensure that the above prerequisites have been met.
-2. Download the intersight_account_reset_tool.py file for the Cisco Intersight Universal API Calls module from here on GitHub.
+2. Download the intersight_account_reset_tool.py file for the Cisco Intersight Account Reset Tool from here on GitHub.
 3. Edit the intersight_account_reset_tool.py file to set the key_id variable using the following instructions:
    - Open the intersight_account_reset_tool.py file in an IDLE or text editor of choice.
    - Find the comment **"MODULE REQUIREMENT 1"**.
@@ -41,7 +41,7 @@ The Cisco Intersight Account Reset Tool also has the ability to exempt specified
 The Cisco Intersight Account Reset Tool provides the ability to exempt specified users and devices from the Intersight account reset process. The following is a list of the exemptions and how to setup each:
 
 - **User Exemptions** - Excludes specified users from the Intersight account reset process.
-  - Open the intersight_universal_api_calls.py file in an IDLE or text editor of choice.
+  - Open the intersight_account_reset_tool.py file in an IDLE or text editor of choice.
   - Find the comment **"MODULE OPTION 1 - User Exemptions"**.
   - Underneath, you will find the list **exempt_users = []**. The list is currently empty.
   - Fill in between the square brackets of the **exempt_users** list with the email address of any users that should not be removed by the Account Reset Tool. Each email address entry should be separated by a comma. The email address of the user that owns the API key will not be removed by default and is automatically exempted. Leave the list blank if there are no other user exemptions. Here is an example: 
@@ -50,7 +50,7 @@ The Cisco Intersight Account Reset Tool provides the ability to exempt specified
      ```
    
 - **Device Exemptions** - Excludes specified devices from the Intersight account reset process.
-    - Open the intersight_universal_api_calls.py file in an IDLE or text editor of choice.
+    - Open the intersight_account_reset_tool.py file in an IDLE or text editor of choice.
     - Find the comment **"MODULE OPTION 2 - Device Exemptions"**.
     - Underneath, you will find the list **exempt_devices = []**. The list is currently empty.
     - Fill in between the square brackets of the **exempt_devices** list with the hostname, product ID, or serial number of any devices that should not be removed by the Account Reset Tool. Each entry should be separated by a comma. If a hostname or product ID is entered, all devices sharing that same hostname or product ID will be exempted. For UCS domains with dual fabric interconnects, be sure to provide the serial number of each fabric interconnect individually. Leave the list blank if there are no device exemptions. 
