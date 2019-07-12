@@ -10,7 +10,11 @@ The Cisco Intersight Account Reset Tool also has the ability to exempt specified
 
 ## Prerequisites:
 1. Python 3 installed, which can be downloaded from https://www.python.org/downloads/.
-2. The Cisco Intersight SDK for Python, which can be installed by running: "pip install git+https://github.com/CiscoUcs/intersight-python.git". More information on the Cisco Intersight SDK for Python can be found at https://github.com/CiscoUcs/intersight-python.
+2. The Cisco Intersight SDK for Python, which can be installed by running:
+   ```py
+   pip install git+https://github.com/CiscoUcs/intersight-python.git
+   ```
+   More information on the Cisco Intersight SDK for Python can be found at https://github.com/CiscoUcs/intersight-python.
 3. An API key from your Intersight account. To learn how to generate an API key for your Intersight account, more information can be found at https://intersight.com/help/features#rest_apis.
 
 ## Getting Started:
