@@ -35,7 +35,7 @@ The Cisco Intersight Account Reset Tool also has the ability to exempt specified
 6. The intersight_account_reset_tool.py file is now ready for use. The file can be ran directly or as a script. See the **"Options:"** section for information on the exempting users or devices under your Intersight account from the reset process.
 
 ## Options:
-#### Exemptions:
+### Exemptions:
 The Cisco Intersight Account Reset Tool provides the ability to exempt specified users and devices from the Intersight account reset process. The following is a list of the exemptions and how to setup each:
 
 - **User Exemptions** - Excludes specified users from the Intersight account reset process.
