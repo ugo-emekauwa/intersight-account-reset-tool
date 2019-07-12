@@ -23,7 +23,7 @@ Use of the Cisco Intersight Account Reset Tool is at your own risk and intended 
 
 1. Please ensure that the above prerequisites have been met.
 2. Download the intersight_account_reset_tool.py file for the Cisco Intersight Account Reset Tool from here on GitHub.
-3. Edit the intersight_account_reset_tool.py file to set the key_id variable using the following instructions:
+3. Edit the intersight_account_reset_tool.py file to set the **key_id** variable using the following instructions:
    - Open the intersight_account_reset_tool.py file in an IDLE or text editor of choice.
    - Find the comment **"MODULE REQUIREMENT 1"**.
    - Underneath, you will find the variable **key_id = ""**. The variable is currently empty.
@@ -31,7 +31,7 @@ Use of the Cisco Intersight Account Reset Tool is at your own risk and intended 
      ```py
      key_id = "5c89885075646127773ec143/5c82fc477577712d3088eb2f/5c8987b17577712d302eaaff"
      ```
-4. Edit the intersight_account_reset_tool.py file to set the key variable using the following instructions:
+4. Edit the intersight_account_reset_tool.py file to set the **key** variable using the following instructions:
    - Open the intersight_account_reset_tool.py file in an IDLE or text editor of choice.
    - Find the comment **"MODULE REQUIREMENT 2"**.
    - Underneath, you will find the variable **key = ""**. The variable is currently empty.
@@ -50,7 +50,7 @@ The Cisco Intersight Account Reset Tool provides the ability to exempt specified
   - Open the intersight_account_reset_tool.py file in an IDLE or text editor of choice.
   - Find the comment **"MODULE OPTION 1 - User Exemptions"**.
   - Underneath, you will find the list **exempt_users = []**. The list is currently empty.
-  - Fill in between the square brackets of the **exempt_users** list with the email address of any users that should not be removed by the Account Reset Tool. Each email address entry should be separated by a comma. The email address of the user that owns the API key will not be removed by default and is automatically exempted. Leave the list blank if there are no other user exemptions. Here is an example: 
+  - Fill in between the square brackets of the **exempt_users** list with the email address of any users that should not be removed by the Account Reset Tool. Each email address entry should be placed in single or double quotes and separated by a comma. The email address of the user that owns the API key will not be removed by default and is automatically exempted. Leave the list blank if there are no other user exemptions. Here is an example with entries for two sample users: 
      ```py
      exempt_users = ["user1@email.com", "user2@email.com"]
      ```
@@ -59,11 +59,11 @@ The Cisco Intersight Account Reset Tool provides the ability to exempt specified
     - Open the intersight_account_reset_tool.py file in an IDLE or text editor of choice.
     - Find the comment **"MODULE OPTION 2 - Device Exemptions"**.
     - Underneath, you will find the list **exempt_devices = []**. The list is currently empty.
-    - Fill in between the square brackets of the **exempt_devices** list with the hostname, product ID, or serial number of any devices that should not be removed by the Account Reset Tool. Each entry should be separated by a comma. If a hostname or product ID is entered, all devices sharing that same hostname or product ID will be exempted. For Cisco UCS domains with dual Fabric Interconnects, be sure to provide the serial number of each Fabric Interconnect individually. Leave the list blank if there are no device exemptions. Here is an example using serial numbers:
+    - Fill in between the square brackets of the **exempt_devices** list with the hostname, product ID, or serial number of any devices that should not be removed by the Account Reset Tool. Each entry should be placed in single or double quotes and separated by a comma. If a hostname or product ID is entered, all devices sharing that same hostname or product ID will be exempted. For Cisco UCS domains with dual Fabric Interconnects, be sure to provide the serial number of each Fabric Interconnect individually. Leave the list blank if there are no device exemptions. Here is an example with entries for three devices using sample serial numbers:
       ```py
       exempt_devices = ["ABV1304000V", "EZL252770MU", "WIA344370GE"]
       ```
-    - Combinations of attributes for different devices can also be used as well for exemptions. Here is an example using a serial number, a hostname and a product ID for any Cisco HyperFlex HX220c M5 All Flash server nodes:
+    - Combinations of attributes for different devices can also be used as well for exemptions. Here is an example of three entries using a serial number for the first device, a hostname for the second device, and a product ID for any device that is a Cisco HyperFlex HX220c M5 All Flash server node:
       ```py
       exempt_devices = ["ABV1304000V", "hostname1@company.org", "HXAF220C-M5SX"]
       ```
