@@ -50,7 +50,7 @@ The Cisco Intersight Account Reset Tool provides the ability to exempt specified
   - Open the intersight_account_reset_tool.py file in an IDLE or text editor of choice.
   - Find the comment **"MODULE OPTION 1 - User Exemptions"**.
   - Underneath, you will find the list **exempt_users = []**. The list is currently empty.
-  - Fill in between the square brackets of the **exempt_users** list with the email address of any users that should not be removed by the Account Reset Tool. Each email address entry should be placed in single or double quotes and separated by a comma. The email address of the user that owns the API key will not be removed by default and is automatically exempted. Leave the list blank if there are no other user exemptions. Here is an example with entries for two sample users: 
+  - Fill in between the square brackets of the **exempt_users** list with the email address of any users that should not be removed by the Account Reset Tool. Each email address entry should be placed in single or double quotes and separated by a comma. The email address of the user that owns the API key will not be removed by default and is automatically exempted. Leave the list blank if there are no other user exemptions. Here is an example with entries for two user sample email addresses: 
      ```py
      exempt_users = ["user1@email.com", "user2@email.com"]
      ```
@@ -63,7 +63,7 @@ The Cisco Intersight Account Reset Tool provides the ability to exempt specified
       ```py
       exempt_devices = ["ABV1304000V", "EZL252770MU", "WIA344370GE"]
       ```
-    - Combinations of attributes for different devices can also be used as well for exemptions. Here is an example of three entries using a serial number for the first device, a hostname for the second device, and a product ID for any device that is a Cisco HyperFlex HX220c M5 All Flash server node:
+    - Combinations of attributes for different devices can also be used as well for exemptions. Here is an example of three entries using a sample serial number for the first device, a sample hostname for the second device, and a product ID for any device that is a Cisco HyperFlex HX220c M5 All Flash server node:
       ```py
       exempt_devices = ["ABV1304000V", "hostname1@company.org", "HXAF220C-M5SX"]
       ```
