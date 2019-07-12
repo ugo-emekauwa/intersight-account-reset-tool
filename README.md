@@ -40,7 +40,7 @@ Use of the Cisco Intersight Account Reset Tool is at your own risk and intended 
      key = "C:\\Keys\\Key1\\SecretKey.txt
      ```
 5. Save the changes you have made to the intersight_account_reset_tool.py file.
-6. The intersight_account_reset_tool.py file is now ready for use. The file can be ran directly or as a script. See the **"Options:"** section for information on the exempting users or devices under your Intersight account from the reset process.
+6. The intersight_account_reset_tool.py file is now ready for use. The file can be ran directly or as a script. See the **"Options:"** section for information on how to exempt specified users or devices under an Intersight account from the reset process.
 
 ## Options:
 ### Exemptions
