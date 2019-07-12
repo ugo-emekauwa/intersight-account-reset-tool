@@ -18,7 +18,7 @@ The Cisco Intersight Account Reset Tool also has the ability to exempt specified
 1. Please ensure that the above prerequisites have been met.
 2. Download the intersight_account_reset_tool.py file for the Cisco Intersight Universal API Calls module from here on GitHub.
 3. Edit the intersight_account_reset_tool.py file to set the key_id variable using the following instructions:
-   - Open the intersight_universal_api_calls.py file in an IDLE or text editor of choice.
+   - Open the intersight_account_reset_tool.py file in an IDLE or text editor of choice.
    - Find the comment **"MODULE REQUIREMENT 1"**.
    - Underneath, you will find the variable **key_id = ""**. The variable is currently empty.
    - Fill in between the quotes of the **key_id** variable value with the ID of your API key. For example: 
@@ -26,14 +26,14 @@ The Cisco Intersight Account Reset Tool also has the ability to exempt specified
      key_id = "5c89885075646127773ec143/5c82fc477577712d3088eb2f/5c8987b17577712d302eaaff"
      ```
 4. Edit the intersight_account_reset_tool.py file to set the key variable using the following instructions:
-   - Open the intersight_universal_api_calls.py file in an IDLE or text editor of choice.
+   - Open the intersight_account_reset_tool.py file in an IDLE or text editor of choice.
    - Find the comment **"MODULE REQUIREMENT 2"**.
    - Underneath, you will find the variable **key = ""**. The variable is currently empty.
    - Fill in between the quotes of the **key** variable value with your system's file path to the SecretKey.txt file for your API key. For example: 
      ```py
      key = "C:\\Keys\\Key1\\SecretKey.txt
      ```
-5. Save the changes you have made to the intersight_universal_api_calls.py file.
+5. Save the changes you have made to the intersight_account_reset_tool.py file.
 6. The intersight_account_reset_tool.py file is now ready for use. The file can be ran directly or as a script. See the **"Options:"** section for information on the exempting users or devices under your Intersight account from the reset process.
 
 ## Options:
