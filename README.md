@@ -2,7 +2,7 @@
 
 The Cisco Intersight Account Reset Tool is designed to increase the efficiency of developers, engineers, sellers and trainers working with Cisco Intersight by automating the Intersight account reset process.
 
-The Cisco Intersight Reset Tool will automatically remove any devices, profiles, policies and/or users created under the Intersight account.
+The Cisco Intersight Account Reset Tool will automatically remove any devices, profiles, policies and/or users created under the Intersight account.
 By removing the burden of having to manually reset accounts, the Cisco Intersight Account Reset Tool enables more time to be spent on other tasks.
 For developers and engineers building applications and platforms for Cisco Intersight, the development and testing process of new features is simplified. 
 For sellers and trainers demonstrating the Cisco Intersight product, downtime between customer or student engagements is reduced.
