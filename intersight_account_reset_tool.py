@@ -670,7 +670,7 @@ if devices["Results"] is not None:
 print("\nThe process of searching for and removing any unexempted registered devices is complete.\n")
   
 # Account cleanup and reset complete
-print("The Intersight Service Account Reset process is complete.\n")
+print("The Intersight Account Reset process is complete.\n")
 
 # Ending the Cisco Intersight Account Reset Tool
 print("The Cisco Intersight Account Reset Tool has completed.\n")
