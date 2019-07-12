@@ -56,8 +56,8 @@ The Cisco Intersight Account Reset Tool provides the ability to exempt specified
      exempt_devices = ["ABV1304000V", "EZL252770MU", "WIA344370GE"]
      ```
 
-### Author:
+## Author:
 Ugo Emekauwa
 
-### Contact Information:
+## Contact Information:
 uemekauw@cisco.com or uemekauwa@gmail.com
