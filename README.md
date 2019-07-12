@@ -8,6 +8,8 @@ For developers and engineers building applications and platforms for Cisco Inter
 For sellers and trainers demonstrating the Cisco Intersight product, downtime between customer or student engagements is reduced.
 The Cisco Intersight Account Reset Tool also has the ability to exempt specified users and devices from the account reset process.
 
+Use of the the Cisco Intersight Account Reset Tool is at your own risk and intended for development, testing, demonstration and training environments. Please do not use on production systems and or production environments.
+
 ## Prerequisites:
 1. Python 3 installed, which can be downloaded from https://www.python.org/downloads/.
 2. The Cisco Intersight SDK for Python, which can be installed by running:
