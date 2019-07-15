@@ -37,7 +37,7 @@ Use of the Cisco Intersight Account Reset Tool is at your own risk and intended 
    - Underneath, you will find the variable **key = ""**. The variable is currently empty.
    - Fill in between the quotes of the **key** variable value with your system's file path to the SecretKey.txt file for your API key. For example: 
      ```py
-     key = "C:\\Keys\\Key1\\SecretKey.txt
+     key = "C:\\Keys\\Key1\\SecretKey.txt"
      ```
 5. Save the changes you have made to the intersight_account_reset_tool.py file.
 6. The intersight_account_reset_tool.py file is now ready for use. The file can be ran directly or as a script. See the **"Options:"** section for information on how to exempt specified users or devices under an Intersight account from the reset process.
