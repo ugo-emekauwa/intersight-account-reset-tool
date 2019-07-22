@@ -70,6 +70,9 @@ The Cisco Intersight Account Reset Tool provides the ability to exempt specified
       exempt_devices = ["ABV1304000V", "hostname1@company.org", "HXAF220C-M5SX"]
       ```
 
+## Use Cases:
+- A version of the Cisco Intersight Account Reset Tool that has been built for Cisco dCloud is being used to power the demonstration named **_Cisco HyperFlex Edge with Intersight v1_**, available at [https://dcloud-cms.cisco.com/demo/cisco-hyperflex-edge-with-intersight-v1](https://dcloud-cms.cisco.com/demo/cisco-hyperflex-edge-with-intersight-v1).
+
 ## Author:
 Ugo Emekauwa
 
