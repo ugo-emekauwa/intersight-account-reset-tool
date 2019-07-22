@@ -1,5 +1,7 @@
 # Cisco Intersight Account Reset Tool
 
+[![published](https://static.production.devnetcloud.com/codeexchange/assets/images/devnet-published.svg)](https://developer.cisco.com/codeexchange/github/repo/ugo-emekauwa/intersight-account-reset-tool)
+
 The Cisco Intersight Account Reset Tool is designed to increase the efficiency of developers, engineers, sellers and trainers working with Cisco Intersight by automating the Intersight account reset process.
 
 The Cisco Intersight Account Reset Tool will automatically remove any devices, profiles, policies and/or users created under an Intersight account.
