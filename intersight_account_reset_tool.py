@@ -1,5 +1,5 @@
 """
-Cisco Intersight Account Reset Tool, v1.0
+Cisco Intersight Account Reset Tool, v2.0
 Author: Ugo Emekauwa
 Contact: uemekauw@cisco.com, uemekauwa@gmail.com
 Summary: The Cisco Intersight Account Reset Tool automates the process
@@ -72,7 +72,7 @@ exempt_devices = []
 
 
 # Define Intersight SDK IntersightApiClient variables
-# Tested on Cisco Intersight API Reference v1.0.9-872
+# Tested on Cisco Intersight API Reference v1.0.9-2440
 base_url = "https://intersight.com/api/v1"
 api_instance = IntersightApiClient(host=base_url,private_key=key,api_key_id=key_id)
 
@@ -306,87 +306,61 @@ for user in get_users["Results"]:
 
 print("\nThe process of searching for and removing any unexempted users is complete.\n")
 
-# Check for and delete any HyperFlex cluster profiles
-print("Searching for and deleting any HyperFlex cluster profiles.")
+# List of Intersight profile API types for cleanup run, based on API Reference Version v1.0.9-2440
+intersight_profile_apis = [
+  {"name": "HyperFlex Cluster Profiles",
+   "path": "hyperflex/ClusterProfiles",
+   },
+  {"name": "Server Profiles",
+   "path": "server/Profiles",
+   },
+  {"name": "Recovery Backup Profiles",
+   "path": "recovery/BackupProfiles",
+   },
+  ]
 
-# Retrieve all available HyperFlex cluster profiles
-get_hxcps = iu_get("hyperflex/ClusterProfiles")
+# Check for and delete any Intersight profiles
+print("Beginning cleanup of any Intersight profiles...\n")
+for profile_api in intersight_profile_apis:
+  print(f'Searching for and deleting any Intersight {profile_api["name"]}.')
 
-if get_hxcps is not None:
-  # hxcps stands for "HyperFlex Cluster Profiles"
-  if get_hxcps["Results"] is None:
-    print("There are no HyperFlex cluster profiles available to delete.\n")
+  # Retrieve all available profiles
+  get_profiles = iu_get(profile_api["path"])
+
+  if get_profiles is not None:
+    if get_profiles["Results"] is None:
+      print(f'There are no {profile_api["name"]} available to delete.\n')
+    else:
+      for current_profile in get_profiles["Results"]:
+        # Abort any current profiles in a deployment state
+        print(f'The profile named {current_profile["Name"]} has been identified.')
+        print(f'Attempting to abort any incomplete states of {current_profile["Name"]} if needed.')
+        profile_abort_patch_data = {"Action": "Abort"}
+        abort_profile = iu_patch_moid(profile_api["path"],current_profile["Moid"],profile_abort_patch_data)
+        if abort_profile == "The PATCH method failed.":
+          print(f'Unable to abort the state of {current_profile["Name"]}, the action may not be needed. Check to see if the attempt to delete the profile is successful below.')
+        else:
+          print(f'The abort action was successful on {current_profile["Name"]}.')
+        print(f'Attempting to unassign the profile named {current_profile["Name"]} if needed.')
+        profile_unassign_patch_data = {"Action": "Unassign"}
+        unassign_profile = iu_patch_moid(profile_api["path"],current_profile["Moid"],profile_unassign_patch_data)
+        if unassign_profile == "The PATCH method failed.":
+          print(f'Unable to unassign {current_profile["Name"]}, the action may not be needed. Check to see if the attempt to delete the profile is successful below.')
+        else:
+          print(f'The unassign action was successful on {current_profile["Name"]}.')
+        print(f'Attempting to delete the profile named {current_profile["Name"]} at URL: {base_url}/{profile_api["path"]}/{current_profile["Moid"]}')
+        delete_profile = iu_delete_moid(profile_api["path"],current_profile["Moid"])
+        if delete_profile == "The DELETE method failed.":
+          print(f'Unable to delete the profile named {current_profile["Name"]}, please manually review the status.')
+        else:
+          print(f'The profile named {current_profile["Name"]} has been successfully deleted.')
+
+  # If the profile API type is unaccessible, log status and move on
   else:
-    for hxc_profile in get_hxcps["Results"]:
-      # Abort any HyperFlex cluster profiles in a deployment state
-      print("The HyperFlex cluster profile named " + hxc_profile["Name"] + " has been identified.")
-      print("Attempting to abort any incomplete states of " + hxc_profile["Name"] + " if needed.")
-      hxcp_abort_patch_data = {"Action": "Abort"}
-      abort_hxcp = iu_patch_moid("hyperflex/ClusterProfiles",hxc_profile["Moid"],hxcp_abort_patch_data)
-      if abort_hxcp == "The PATCH method failed.":
-        print("Unable to abort the state of " + hxc_profile["Name"] + ", the action may not be needed. Check to see if the attempt to delete the HyperFlex cluster profile is successful below.")
-      else:
-        print("The abort action was successful on " + hxc_profile["Name"] + ".")
-      print("Attempting to unassign the HyperFlex cluster profile named " + hxc_profile["Name"] + " if needed.")
-      hxcp_unassign_patch_data = {"Action": "Unassign"}
-      unassign_hxcp = iu_patch_moid("hyperflex/ClusterProfiles",hxc_profile["Moid"],hxcp_unassign_patch_data)
-      if unassign_hxcp == "The PATCH method failed.":
-        print("Unable to unassign " + hxc_profile["Name"] + ", the action may not be needed. Check to see if the attempt to delete the HyperFlex cluster profile is successful below.")
-      else:
-        print("The unassign action was successful on " + hxc_profile["Name"] + ".")
-      print("Attempting to delete the HyperFlex cluster profile named " + hxc_profile["Name"] + " at URL: " + base_url + "/hyperflex/ClusterProfiles/" + hxc_profile["Moid"])
-      delete_hxcp = iu_delete_moid("hyperflex/ClusterProfiles",hxc_profile["Moid"])
-      if delete_hxcp == "The DELETE method failed.":
-        print("Unable to delete the HyperFlex cluster profile named " + hxc_profile["Name"] + ", please manually review status.")
-      else:
-        print("The HyperFlex cluster profile named " + hxc_profile["Name"] + " has been successfully deleted.")
+    print(f'The API type for {profile_api["name"]} is unavailable.')
+  print(f'\nThe process of searching for and deleting any {profile_api["name"]} is complete.\n')
 
-# If the HyperFlex cluster profile API type is unaccessible, log status and move on
-else:
-  print("The HyperFlex cluster profile API type is unavailable.")
-print("\nThe process of searching for and deleting any HyperFlex cluster profiles is complete.\n")
-
-# Check for and delete any Server profiles
-print("Searching for and deleting any Server profiles.")
-
-# Retrieve all available Server profiles
-get_sps = iu_get("server/Profiles")
-
-if get_sps is not None:
-  # sps stands for "Server Profiles"
-  if get_sps["Results"] is None:
-    print("There are no Server profiles available to delete.\n")
-  else:
-    for server_profile in get_sps["Results"]:
-      # Abort any Server profiles in a deployment state
-      print("The Server profile named " + server_profile["Name"] + " has been identified.")
-      print("Attempting to abort any incomplete states of " + server_profile["Name"] + " if needed.")
-      sp_abort_patch_data = {"Action": "Abort"}
-      abort_sp = iu_patch_moid("server/Profiles",server_profile["Moid"],sp_abort_patch_data)
-      if abort_sp == "The PATCH method failed.":
-        print("Unable to abort the state of " + server_profile["Name"] + ", the action may not be needed. Check to see if the attempt to delete the Server profile is successful below.")
-      else:
-        print("The abort action was successful on " + server_profile["Name"] + ".")
-      print("Attempting to unassign the Server profile named " + server_profile["Name"] + " if needed.")
-      sp_unassign_patch_data = {"Action": "Unassign"}
-      unassign_sp = iu_patch_moid("server/Profiles",server_profile["Moid"],sp_unassign_patch_data)
-      if unassign_sp == "The PATCH method failed.":
-        print("Unable to unassign " + server_profile["Name"] + ", the action may not be needed. Check to see if the attempt to delete the Server profile is successful below.")
-      else:
-        print("The unassign action was successful on " + server_profile["Name"] + ".")
-      print("Attempting to delete the Server profile named " + server_profile["Name"] + " at URL: " + base_url + "/server/Profiles/" + server_profile["Moid"])
-      delete_sp = iu_delete_moid("server/Profiles",server_profile["Moid"])
-      if delete_sp == "The DELETE method failed.":
-        print("Unable to delete the Server profile named " + server_profile["Name"] + ", please manually review status.")
-      else:
-        print("The Server profile named " + server_profile["Name"] + " has been successfully deleted.")
-
-# If the Server profile API type is unaccessible, log status and move on
-else:
-  print("The Server profile API type is unavailable.")
-print("\nThe process of searching for and deleting any Server profiles is complete.\n")
-
-# List of general Intersight API types for first cleanup run, based on API Reference v1.0.9-872
+# List of general Intersight API types for first cleanup run, based on API Reference v1.0.9-2440
 general_intersight_apis = [
     {"name": "BIOS Policies",
      "path": "bios/Policies",
@@ -579,6 +553,258 @@ general_intersight_apis = [
      },
     {"name": "UCS Director Accounts",
      "path": "iaas/UcsdInfos",
+     },
+    {"name": "CIMC Server Management Access Policies",
+     "path": "access/Policies",
+     },
+    {"name": "Intersight Assist Managed Devices",
+     "path": "asset/ManagedDevices",
+     },
+    {"name": "Asset Targets",
+     "path": "asset/Targets",
+     },
+    {"name": "Adaptor Descriptors",
+     "path": "capability/AdapterUnitDescriptors",
+     },
+    {"name": "Chassis Enclosure Descriptors",
+     "path": "capability/ChassisDescriptors",
+     },
+    {"name": "Chassis Enclosure Manufacturing Properties",
+     "path": "capability/ChassisManufacturingDefs",
+     },
+    {"name": "Switch Equipment Physical Properties",
+     "path": "capability/EquipmentPhysicalDefs",
+     },
+    {"name": "Switch Equipment Slot Arrays",
+     "path": "capability/EquipmentSlotArrays",
+     },
+    {"name": "Fan Module Descriptors",
+     "path": "capability/FanModuleDescriptors",
+     },
+    {"name": "Fan Module Manufacturing Properties",
+     "path": "capability/FanModuleManufacturingDefs",
+     },
+    {"name": "IO Module Capabilities",
+     "path": "capability/IoCardCapabilityDefs",
+     },
+    {"name": "IO Module Descriptors",
+     "path": "capability/IoCardDescriptors",
+     },
+    {"name": "IO Module Manufacturing Properties",
+     "path": "capability/IoCardManufacturingDefs",
+     },
+    {"name": "IO Module Port Group Aggregation Capabilities",
+     "path": "capability/PortGroupAggregationDefs",
+     },
+    {"name": "Power Supply Unit Descriptors",
+     "path": "capability/PsuDescriptors",
+     },
+    {"name": "Power Supply Unit Manufacturing Properties",
+     "path": "capability/PsuManufacturingDefs",
+     },
+    {"name": "SIOC Module Capabilities",
+     "path": "capability/SiocModuleCapabilityDefs",
+     },
+    {"name": "SIOC Module Descriptors",
+     "path": "capability/SiocModuleDescriptors",
+     },
+    {"name": "SIOC Module Manufacturing Properties",
+     "path": "capability/SiocModuleManufacturingDefs",
+     },
+    {"name": "Switch Equipment Capabilities",
+     "path": "capability/SwitchCapabilities",
+     },
+    {"name": "Switch Equipment Descriptors",
+     "path": "capability/SwitchDescriptors",
+     },
+    {"name": "Switch Equipment Manufacturing Properties",
+     "path": "capability/SwitchManufacturingDefs",
+     },
+    {"name": "Blade Server Identities",
+     "path": "compute/BladeIdentities",
+     },
+    {"name": "Rack Server Identities",
+     "path": "compute/RackUnitIdentities",
+     },
+    {"name": "Export Operations (aka Exporter Instances)",
+     "path": "config/Exporters",
+     },
+    {"name": "Import Operations (aka Importer Instances)",
+     "path": "config/Importers",
+     },
+    {"name": "Connector Pack Installs and Upgrades",
+     "path": "connectorpack/ConnectorPackUpgrades",
+     },
+    {"name": "Ethernet Network Control Policies",
+     "path": "fabric/EthNetworkControlPolicies",
+     },
+    {"name": "Ethernet Network Group Policies",
+     "path": "fabric/EthNetworkGroupPolicies",
+     },
+    {"name": "Ethernet Network Policies",
+     "path": "fabric/EthNetworkPolicies",
+     },
+    {"name": "Fibre Channel Network Policies",
+     "path": "fabric/FcNetworkPolicies",
+     },
+    {"name": "Fibre Channel Uplink Port Channel Roles",
+     "path": "fabric/FcUplinkPcRoles",
+     },
+    {"name": "Fibre Channel Uplink Roles",
+     "path": "fabric/FcUplinkRoles",
+     },
+    {"name": "FCoE Uplink Port Channel Roles",
+     "path": "fabric/FcoeUplinkPcRoles",
+     },
+    {"name": "FCoE Uplink Roles",
+     "path": "fabric/FcoeUplinkRoles",
+     },
+    {"name": "Multicast Policies",
+     "path": "fabric/MulticastPolicies",
+     },
+    {"name": "Port Channel Operations",
+     "path": "fabric/PcOperations",
+     },
+    {"name": "Port Modes",
+     "path": "fabric/PortModes",
+     },
+    {"name": "Port Operations",
+     "path": "fabric/PortOperations",
+     },
+    {"name": "Port Policies",
+     "path": "fabric/PortPolicies",
+     },
+    {"name": "Server Port Roles",
+     "path": "fabric/ServerRoles",
+     },
+    {"name": "Switch Cluster Profiles",
+     "path": "fabric/SwitchClusterProfiles",
+     },
+    {"name": "Switch Profiles",
+     "path": "fabric/SwitchProfiles",
+     },
+    {"name": "System QoS Policies",
+     "path": "fabric/SystemQosPolicies",
+     },
+    {"name": "Uplink Port Channel Roles",
+     "path": "fabric/UplinkPcRoles",
+     },
+    {"name": "Uplink Roles",
+     "path": "fabric/UplinkRoles",
+     },
+    {"name": "VLANs",
+     "path": "fabric/Vlans",
+     },
+    {"name": "VSANs",
+     "path": "fabric/Vsans",
+     },
+    {"name": "Fibre Channel WWN Pools",
+     "path": "fcpool/Pools",
+     },
+    {"name": "BIOS Descriptors",
+     "path": "firmware/BiosDescriptors",
+     },
+    {"name": "Board Controller Descriptors",
+     "path": "firmware/BoardControllerDescriptors",
+     },
+    {"name": "Chassis Firmware Upgrades",
+     "path": "firmware/ChassisUpgrades",
+     },
+    {"name": "CIMC Descriptors",
+     "path": "firmware/CimcDescriptors",
+     },
+    {"name": "DIMM Descriptors",
+     "path": "firmware/DimmDescriptors",
+     },
+    {"name": "Drive Descriptors",
+     "path": "firmware/DriveDescriptors",
+     },
+    {"name": "GPU Descriptors",
+     "path": "firmware/GpuDescriptors",
+     },
+    {"name": "HBA Descriptors",
+     "path": "firmware/HbaDescriptors",
+     },
+    {"name": "IOM Descriptors",
+     "path": "firmware/IomDescriptors",
+     },
+    {"name": "mSwitch Descriptors",
+     "path": "firmware/MswitchDescriptors",
+     },
+    {"name": "NXOS (Fabric Interconnects) Descriptors",
+     "path": "firmware/NxosDescriptors",
+     },
+    {"name": "PCIE Descriptors",
+     "path": "firmware/PcieDescriptors",
+     },
+    {"name": "Power Supply Unit Descriptors",
+     "path": "firmware/PsuDescriptors",
+     },
+    {"name": "SAS Expander Descriptors",
+     "path": "firmware/SasExpanderDescriptors",
+     },
+    {"name": "Storage Controller Descriptors",
+     "path": "firmware/StorageControllerDescriptors",
+     },
+    {"name": "Switch Firmware Upgrades",
+     "path": "firmware/SwitchUpgrades",
+     },
+    {"name": "HXAP Data Center Objects",
+     "path": "hyperflex/HxapDatacenters",
+     },
+    {"name": "OAuth2 Client Application Registrations",
+     "path": "iam/AppRegistrations",
+     },
+    {"name": "Certificate Signing Requests (CSR)",
+     "path": "iam/CertificateRequests",
+     },
+    {"name": "Certificates",
+     "path": "iam/Certificates",
+     },
+    {"name": "Access Management IP Addresses",
+     "path": "iam/IpAddresses",
+     },
+    {"name": "User OAuth Tokens",
+     "path": "iam/OAuthTokens",
+     },
+    {"name": "User and User Group Role Permissions",
+     "path": "iam/Permissions",
+     },
+    {"name": "Private Key Specifications",
+     "path": "iam/PrivateKeySpecs",
+     },
+    {"name": "Resource Roles",
+     "path": "iam/ResourceRoles",
+     },
+    {"name": "Intelligent Platform Management Interface (IPMI) Over LAN Policies",
+     "path": "ipmioverlan/Policies",
+     },
+    {"name": "IP Pools",
+     "path": "ippool/Pools",
+     },
+    {"name": "MAC Address Pools",
+     "path": "macpool/Pools",
+     },
+    {"name": "Persistent Memory Policies",
+     "path": "memory/PersistentMemoryPolicies",
+     },
+    {"name": "Multi-Tenancy Organizations",
+     "path": "organization/Organizations",
+     },
+    {"name": "OS Installation Answer Files",
+     "path": "os/ConfigurationFiles",
+     },
+    {"name": "Backup Configuration Policies",
+     "path": "recovery/BackupConfigPolicies",
+     },
+    {"name": "On Demand Backups",
+     "path": "recovery/OnDemandBackups",
+     },
+    {"name": "Restore Operations",
+     "path": "recovery/Restores",
+     },
+    {"name": "Recovery Schedule Configuration Policies",
+     "path": "recovery/ScheduleConfigPolicies",
      },
 ]
 
