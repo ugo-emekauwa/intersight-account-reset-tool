@@ -857,7 +857,7 @@ general_intersight_apis = [
     {"name": "Workflow Infos",
      "path": "workflow/WorkflowInfos",
      },
-]
+    ]
 
 # Pre-set list for general Intersight API types that may be marked for a second cleanup run
 retry_general_intersight_apis = []
