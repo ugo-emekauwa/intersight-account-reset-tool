@@ -779,9 +779,6 @@ general_intersight_apis = [
     {"name": "Resource Roles",
      "path": "iam/ResourceRoles",
      },
-    {"name": "Intelligent Platform Management Interface (IPMI) Over LAN Policies",
-     "path": "ipmioverlan/Policies",
-     },
     {"name": "IP Pools",
      "path": "ippool/Pools",
      },
@@ -856,6 +853,12 @@ general_intersight_apis = [
      },
     {"name": "Workflow Infos",
      "path": "workflow/WorkflowInfos",
+     },
+    {"name": "Workflow Definitions",
+     "path": "workflow/WorkflowDefinitions",
+     },
+    {"name": "Workflow Custom Data Type Definitions",
+     "path": "workflow/CustomDataTypeDefinitions",
      },
     ]
 
