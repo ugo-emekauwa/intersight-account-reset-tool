@@ -71,7 +71,19 @@ The Cisco Intersight Account Reset Tool provides the ability to exempt specified
       ```
 
 ## Use Cases:
-- A modified version of the Cisco Intersight Account Reset Tool has been built for Cisco dCloud and is being used to power the demonstration named **_Cisco HyperFlex Edge with Intersight v1_**, available at [https://dcloud-cms.cisco.com/demo/cisco-hyperflex-edge-with-intersight-v1](https://dcloud-cms.cisco.com/demo/cisco-hyperflex-edge-with-intersight-v1).
+The Cisco Intersight Account Reset Tool is a modified version of part of the automation solution used to support the following Cisco Data Center product demonstrations on Cisco dCloud:
+
+1. [_Cisco HyperFlex Edge 4.5 with Intersight v1 (All Flash, 2-Node)_](https://dcloud2-rtp.cisco.com/content/demo/760975)
+2. [_Cisco HyperFlex Edge 4.5 with Intersight v1 (Hybrid, 2-Node)_](https://dcloud2-rtp.cisco.com/content/demo/760974)
+3. [_Cisco HyperFlex Edge 4.5 with Intersight v1 (All Flash, 3-Node)_](https://dcloud-cms.cisco.com/demo/cisco-hyperflex-edge-4-5-with-intersight-v1-all-flash-3-node)
+
+Cisco dCloud is available at [https://dcloud.cisco.com](https://dcloud.cisco.com), where product demonstrations and labs can be found in the Catalog.
+
+## Related Tools:
+Here are similar tools to help administer and manage Cisco Intersight.
+- [Cisco Intersight Universal API Calls](https://github.com/ugo-emekauwa/intersight-universal-api-calls)
+- [HyperFlex Edge Automated Deployment Tool for Cisco Intersight](https://github.com/ugo-emekauwa/hx-auto-deploy)
+- [HyperFlex Notification Tool for Cisco Intersight](https://github.com/ugo-emekauwa/hyperflex-notification-tool)
 
 ## Author:
 Ugo Emekauwa
